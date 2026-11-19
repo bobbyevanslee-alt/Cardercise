@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#311047">
+  <meta name="description" content="Plan a Cardercise workout from Bobby Allen's playing-card exercise deck.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/app-icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/app-icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Cardercise Workout Planner</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">C</div>
+    <div><p class="eyebrow">OLD FART EDITION</p><h1>Cardercise</h1></div>
+    <img class="back-peek" src="assets/cards/back.webp" alt="Cardercise card back">
+  </header>
+
+  <main>
+    <section id="setup-screen" class="panel hero-panel">
+      <p class="eyebrow">THE PLAYING-CARD WORKOUT</p>
+      <h2>Plan your workout</h2>
+      <p class="intro">The deck chooses four exercises, then deals your repetition plan. Set your numbers and let the cards do the planning.</p>
+
+      <div class="rules-card">
+        <h3>Your plan has two phases</h3>
+        <ol>
+          <li><strong>Assign exercises:</strong> the first usable card in each suit assigns that suit’s exercise. Each exercise is used once.</li>
+          <li><strong>Deal repetitions:</strong> a count card sets how many cards to draw. Suit values become reps for that suit’s exercise.</li>
+        </ol>
+      </div>
+
+      <form id="settings-form" class="settings-grid">
+        <label>Default reps <span>when a suit has no cards</span>
+          <input id="default-reps" type="number" min="0" max="99" value="5" inputmode="numeric">
+        </label>
+        <label>Minimum reps <span>when a suit has a value</span>
+          <input id="minimum-reps" type="number" min="0" max="99" value="5" inputmode="numeric">
+        </label>
+        <label>Base reps <span>added to the suit’s card total</span>
+          <input id="base-reps" type="number" min="0" max="99" value="0" inputmode="numeric">
+        </label>
+        <label class="toggle-row">
+          <input id="special-mode" type="checkbox">
+          <span><strong>Special mode</strong><small>Draw 5 repetition cards each round for 9 rounds.</small></span>
+        </label>
+      </form>
+
+      <button id="plan-button" class="button primary full">Plan My Workout</button>
+      <p class="fine-print">Starter settings are 5 default, 5 minimum, and 0 base reps. Change them to match your worksheet.</p>
+    </section>
+
+    <section id="phase-one" class="panel phase-panel hidden" aria-live="polite">
+      <div class="phase-heading"><span class="phase-number">1</span><div><p class="eyebrow">PHASE ONE</p><h2>Exercise assignments</h2></div></div>
+      <p class="intro">Your shuffled deck has assigned one unique exercise to each suit. When a Joker appears, choose an open suit and an unused exercise.</p>
+      <div id="assignments" class="assignment-grid"></div>
+      <div id="assignment-note" class="status-note"></div>
+      <button id="deal-button" class="button primary full">Continue to Repetition Plan</button>
+    </section>
+
+    <section id="phase-two" class="panel phase-panel hidden" aria-live="polite">
+      <div class="phase-heading"><span class="phase-number">2</span><div><p class="eyebrow">PHASE TWO</p><h2>Your repetition plan</h2></div></div>
+      <p id="plan-summary" class="intro"></p>
+      <div class="table-wrap"><table id="round-table"></table></div>
+      <div id="round-details" class="round-details"></div>
+      <div class="button-row">
+        <button id="print-button" class="button primary">Save / Print PDF</button>
+        <button id="again-button" class="button secondary">Plan Another</button>
+      </div>
+      <p class="fine-print">Choose “Save as PDF” in your browser’s print dialog to download a PDF, or select a printer.</p>
+    </section>
+
+    <section class="safety panel">
+      <p class="eyebrow">A QUICK REMINDER</p>
+      <p>Use a comfortable range and move at your own pace. Talk with your medical professional before starting an exercise program. Stop if you feel pain, dizziness, chest discomfort, or unusual shortness of breath.</p>
+    </section>
+  </main>
+
+  <footer>Cardercise by Bobby Allen · The Wondering Wanderer</footer>
+
+  <dialog id="joker-dialog" class="joker-dialog">
+    <form id="joker-form" method="dialog">
+      <p class="eyebrow">WILD CARD</p>
+      <h2 id="joker-title">Choose what the Joker means</h2>
+      <p id="joker-description" class="intro"></p>
+      <label id="joker-suit-label">Suit
+        <select id="joker-suit" required></select>
+      </label>
+      <label id="joker-exercise-label" class="hidden">Exercise
+        <select id="joker-exercise"></select>
+      </label>
+      <label id="joker-value-label" class="hidden"><span id="joker-value-caption">Repetition value</span>
+        <input id="joker-value" type="number" min="0" max="50" step="1" value="13" inputmode="numeric" required>
+      </label>
+      <button class="button primary full" type="submit" value="use">Use this Joker</button>
+    </form>
+  </dialog>
+
+  <section id="print-area" aria-hidden="true"></section>
+  <script src="assets/card-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
